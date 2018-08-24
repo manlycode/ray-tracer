@@ -58,3 +58,38 @@ func TestAddingTuples(t *testing.T) {
 	assert.Equal(t, 6.0, tupleC.z)
 	assert.Equal(t, 1.0, tupleC.w)
 }
+
+func TestSubtractingPointFromPoint(t *testing.T) {
+	tupleA := Point(3, 2, 1)
+	tupleB := Point(5, 6, 7)
+	tupleC := Sub(tupleA, tupleB)
+
+	assert.Equal(t, -2.0, tupleC.x)
+	assert.Equal(t, -4.0, tupleC.y)
+	assert.Equal(t, -6.0, tupleC.z)
+	assert.Equal(t, 0.0, tupleC.w)
+	assert.True(t, tupleC.IsVector())
+}
+
+func TestSubtractingPointFromVector(t *testing.T) {
+	tupleA := Point(3, 2, 1)
+	tupleB := Vector(5, 6, 7)
+	tupleC := Sub(tupleA, tupleB)
+
+	assert.Equal(t, -2.0, tupleC.x)
+	assert.Equal(t, -4.0, tupleC.y)
+	assert.Equal(t, -6.0, tupleC.z)
+	assert.Equal(t, 1.0, tupleC.w)
+	assert.True(t, tupleC.IsPoint())
+}
+
+func TestSubtractingVectorFromVector(t *testing.T) {
+	tupleA := Vector(3, 2, 1)
+	tupleB := Vector(5, 6, 7)
+	tupleC := Sub(tupleA, tupleB)
+
+	assert.Equal(t, -2.0, tupleC.x)
+	assert.Equal(t, -4.0, tupleC.y)
+	assert.Equal(t, -6.0, tupleC.z)
+	assert.True(t, tupleC.IsVector())
+}
