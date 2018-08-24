@@ -8,10 +8,10 @@ import (
 
 func TestCreateTuple(t *testing.T) {
 	myTuple := new(4.3, -4.2, 3.1, 1.0)
-	assert.Equal(t, myTuple.x, 4.3)
-	assert.Equal(t, myTuple.y, -4.2)
-	assert.Equal(t, myTuple.z, 3.1)
-	assert.Equal(t, myTuple.w, 1.0)
+	assert.Equal(t, 4.3, myTuple.x)
+	assert.Equal(t, -4.2, myTuple.y)
+	assert.Equal(t, 3.1, myTuple.z)
+	assert.Equal(t, 1.0, myTuple.w)
 }
 
 func TestIsPoint(t *testing.T) {
@@ -33,17 +33,17 @@ func TestIsVector(t *testing.T) {
 func TestCreatePoint(t *testing.T) {
 	point := Point(4.3, -4.2, 3.1)
 
-	assert.Equal(t, point.x, 4.3)
-	assert.Equal(t, point.y, -4.2)
-	assert.Equal(t, point.z, 3.1)
+	assert.Equal(t, 4.3, point.x)
+	assert.Equal(t, -4.2, point.y)
+	assert.Equal(t, 3.1, point.z)
 	assert.True(t, point.IsPoint())
 }
 
 func TestCreateVector(t *testing.T) {
 	vector := Vector(4.3, -4.2, 3.1)
 
-	assert.Equal(t, vector.x, 4.3)
-	assert.Equal(t, vector.y, -4.2)
-	assert.Equal(t, vector.z, 3.1)
+	assert.Equal(t, 4.3, vector.x)
+	assert.Equal(t, -4.2, vector.y)
+	assert.Equal(t, 3.1, vector.z)
 	assert.True(t, vector.IsVector())
 }

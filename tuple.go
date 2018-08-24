@@ -19,7 +19,7 @@ func (t Tuple) IsPoint() bool {
 
 //IsVector returns true when the tuple is a vector
 func (t Tuple) IsVector() bool {
-	return !t.IsPoint()
+	return t.w == 0.0
 }
 
 //Point returns a new point tuple
