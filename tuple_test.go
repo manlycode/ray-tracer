@@ -47,3 +47,14 @@ func TestCreateVector(t *testing.T) {
 	assert.Equal(t, 3.1, vector.z)
 	assert.True(t, vector.IsVector())
 }
+
+func TestAddingTuples(t *testing.T) {
+	tupleA := new(3, -2, 5, 1)
+	tupleB := new(-2, 3, 1, 0)
+	tupleC := Add(tupleA, tupleB)
+
+	assert.Equal(t, 1.0, tupleC.x)
+	assert.Equal(t, 1.0, tupleC.y)
+	assert.Equal(t, 6.0, tupleC.z)
+	assert.Equal(t, 1.0, tupleC.w)
+}

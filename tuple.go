@@ -31,3 +31,13 @@ func Point(x float64, y float64, z float64) Tuple {
 func Vector(x float64, y float64, z float64) Tuple {
 	return Tuple{x: x, y: y, z: z, w: 0.0}
 }
+
+//Add adds two tuples and returns their resulting tuple
+func Add(a Tuple, b Tuple) Tuple {
+	return Tuple{
+		x: a.x + b.x,
+		y: a.y + b.y,
+		z: a.z + b.z,
+		w: a.w + b.w,
+	}
+}
