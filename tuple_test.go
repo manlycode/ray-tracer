@@ -123,3 +123,13 @@ func TestMultiplyingTupleByFraction(t *testing.T) {
 	assert.Equal(t, 1.5, result.z)
 	assert.Equal(t, -2.0, result.w)
 }
+
+func TestDividingTupleByScalar(t *testing.T) {
+	tupleA := new(1, -2, 3, -4)
+	result := Div(tupleA, 2)
+
+	assert.Equal(t, 0.5, result.x)
+	assert.Equal(t, -1, result.y)
+	assert.Equal(t, 1.5, result.z)
+	assert.Equal(t, -2.0, result.w)
+}
