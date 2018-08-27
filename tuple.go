@@ -51,3 +51,8 @@ func Sub(a Tuple, b Tuple) Tuple {
 		w: a.w - b.w,
 	}
 }
+
+//Negate negates a tuple
+func Negate(a Tuple) Tuple {
+	return Sub(Vector(0, 0, 0), a)
+}

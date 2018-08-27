@@ -93,3 +93,13 @@ func TestSubtractingVectorFromVector(t *testing.T) {
 	assert.Equal(t, -6.0, tupleC.z)
 	assert.True(t, tupleC.IsVector())
 }
+
+func TestNegatingTuples(t *testing.T) {
+	tupleA := Vector(1, -2, 3)
+	result := Negate(tupleA)
+
+	assert.Equal(t, -1.0, result.x)
+	assert.Equal(t, 2.0, result.y)
+	assert.Equal(t, -3.0, result.z)
+	assert.True(t, result.IsVector())
+}
