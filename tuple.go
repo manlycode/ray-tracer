@@ -1,5 +1,9 @@
 package tuple
 
+import (
+	"math"
+)
+
 // Tuple represents either a vector or a point
 type Tuple struct {
 	x float64
@@ -75,4 +79,9 @@ func Div(a Tuple, scalar float64) Tuple {
 		(scalar / a.z),
 		(scalar / a.w),
 	}
+}
+
+//Magnitude calculates the magnitude of a Vector
+func Magnitude(vec Tuple) float64 {
+	return math.Sqrt(math.Pow(vec.x, 2) + math.Pow(vec.y, 2) + math.Pow(vec.z, 2))
 }

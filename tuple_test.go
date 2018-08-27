@@ -1,6 +1,7 @@
 package tuple
 
 import (
+	"math"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -132,4 +133,26 @@ func TestDividingTupleByScalar(t *testing.T) {
 	assert.Equal(t, -1, result.y)
 	assert.Equal(t, 1.5, result.z)
 	assert.Equal(t, -2.0, result.w)
+}
+
+func TestMagnitudeOfVector(t *testing.T) {
+	tupleA := Vector(1, 0, 0)
+	result := Magnitude(tupleA)
+	assert.Equal(t, 1.0, result)
+
+	tupleA = Vector(0, 1, 0)
+	result = Magnitude(tupleA)
+	assert.Equal(t, 1.0, result)
+
+	tupleA = Vector(0, 0, 1)
+	result = Magnitude(tupleA)
+	assert.Equal(t, 1.0, result)
+
+	tupleA = Vector(1, 2, 3)
+	result = Magnitude(tupleA)
+	assert.Equal(t, math.Sqrt(14), result)
+
+	tupleA = Vector(-1, -2, -3)
+	result = Magnitude(tupleA)
+	assert.Equal(t, math.Sqrt(14), result)
 }
