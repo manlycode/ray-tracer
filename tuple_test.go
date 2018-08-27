@@ -103,3 +103,23 @@ func TestNegatingTuples(t *testing.T) {
 	assert.Equal(t, -3.0, result.z)
 	assert.True(t, result.IsVector())
 }
+
+func TestMultiplyingTupleByScalar(t *testing.T) {
+	tupleA := new(1, -2, 3, -4)
+	result := Mul(tupleA, 3.5)
+
+	assert.Equal(t, 3.5, result.x)
+	assert.Equal(t, -7.0, result.y)
+	assert.Equal(t, 10.5, result.z)
+	assert.Equal(t, -14.0, result.w)
+}
+
+func TestMultiplyingTupleByFraction(t *testing.T) {
+	tupleA := new(1, -2, 3, -4)
+	result := Mul(tupleA, 0.5)
+
+	assert.Equal(t, 0.5, result.x)
+	assert.Equal(t, -1, result.y)
+	assert.Equal(t, 1.5, result.z)
+	assert.Equal(t, -2.0, result.w)
+}

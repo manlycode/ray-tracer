@@ -56,3 +56,13 @@ func Sub(a Tuple, b Tuple) Tuple {
 func Negate(a Tuple) Tuple {
 	return Sub(Vector(0, 0, 0), a)
 }
+
+//Mul multiplies a tuple by a factor
+func Mul(a Tuple, scalar float64) Tuple {
+	return Tuple{
+		(scalar * a.x),
+		(scalar * a.y),
+		(scalar * a.z),
+		(scalar * a.w),
+	}
+}
