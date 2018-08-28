@@ -85,3 +85,13 @@ func Div(a Tuple, scalar float64) Tuple {
 func Magnitude(vec Tuple) float64 {
 	return math.Sqrt(math.Pow(vec.x, 2) + math.Pow(vec.y, 2) + math.Pow(vec.z, 2))
 }
+
+//Normalize returns a normalized vector
+func Normalize(vec Tuple) Tuple {
+	mag := Magnitude(vec)
+	return Vector(
+		vec.x/mag,
+		vec.y/mag,
+		vec.z/mag,
+	)
+}

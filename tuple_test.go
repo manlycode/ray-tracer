@@ -7,6 +7,13 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func assertTuplesEqual(t *testing.T, a Tuple, b Tuple) {
+	assert.Equal(t, a.x, b.x, "x values are not equal")
+	assert.Equal(t, a.y, b.y, "y values are not equal")
+	assert.Equal(t, a.z, b.z, "z values are not equal")
+	assert.Equal(t, a.w, b.w, "w values are not equal")
+}
+
 func TestCreateTuple(t *testing.T) {
 	myTuple := new(4.3, -4.2, 3.1, 1.0)
 	assert.Equal(t, 4.3, myTuple.x)
@@ -155,4 +162,14 @@ func TestMagnitudeOfVector(t *testing.T) {
 	tupleA = Vector(-1, -2, -3)
 	result = Magnitude(tupleA)
 	assert.Equal(t, math.Sqrt(14), result)
+}
+
+func TestNormalize(t *testing.T) {
+	tupleA := Vector(4, 0, 0)
+	result := Normalize(tupleA)
+	assertTuplesEqual(t, Vector(1, 0, 0), result)
+
+	tupleA = Vector(1, 2, 3)
+	result = Normalize(tupleA)
+	assertTuplesEqual(t, Vector(1/math.Sqrt(14), 2/math.Sqrt(14), 3/math.Sqrt(14)), result)
 }
