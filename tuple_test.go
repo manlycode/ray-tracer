@@ -16,10 +16,7 @@ func assertTuplesEqual(t *testing.T, a Tuple, b Tuple) {
 
 func TestCreateTuple(t *testing.T) {
 	myTuple := new(4.3, -4.2, 3.1, 1.0)
-	assert.Equal(t, 4.3, myTuple.x)
-	assert.Equal(t, -4.2, myTuple.y)
-	assert.Equal(t, 3.1, myTuple.z)
-	assert.Equal(t, 1.0, myTuple.w)
+	assertTuplesEqual(t, Point(4.3, -4.2, 3.1), myTuple)
 }
 
 func TestIsPoint(t *testing.T) {
@@ -61,10 +58,7 @@ func TestAddingTuples(t *testing.T) {
 	tupleB := new(-2, 3, 1, 0)
 	tupleC := Add(tupleA, tupleB)
 
-	assert.Equal(t, 1.0, tupleC.x)
-	assert.Equal(t, 1.0, tupleC.y)
-	assert.Equal(t, 6.0, tupleC.z)
-	assert.Equal(t, 1.0, tupleC.w)
+	assertTuplesEqual(t, Point(1.0, 1.0, 6.0), tupleC)
 }
 
 func TestSubtractingPointFromPoint(t *testing.T) {
@@ -72,74 +66,47 @@ func TestSubtractingPointFromPoint(t *testing.T) {
 	tupleB := Point(5, 6, 7)
 	tupleC := Sub(tupleA, tupleB)
 
-	assert.Equal(t, -2.0, tupleC.x)
-	assert.Equal(t, -4.0, tupleC.y)
-	assert.Equal(t, -6.0, tupleC.z)
-	assert.Equal(t, 0.0, tupleC.w)
-	assert.True(t, tupleC.IsVector())
+	assertTuplesEqual(t, Vector(-2, -4, -6), tupleC)
 }
 
 func TestSubtractingPointFromVector(t *testing.T) {
 	tupleA := Point(3, 2, 1)
 	tupleB := Vector(5, 6, 7)
 	tupleC := Sub(tupleA, tupleB)
-
-	assert.Equal(t, -2.0, tupleC.x)
-	assert.Equal(t, -4.0, tupleC.y)
-	assert.Equal(t, -6.0, tupleC.z)
-	assert.Equal(t, 1.0, tupleC.w)
-	assert.True(t, tupleC.IsPoint())
+	assertTuplesEqual(t, Point(-2, -4, -6), tupleC)
 }
 
 func TestSubtractingVectorFromVector(t *testing.T) {
 	tupleA := Vector(3, 2, 1)
 	tupleB := Vector(5, 6, 7)
 	tupleC := Sub(tupleA, tupleB)
-
-	assert.Equal(t, -2.0, tupleC.x)
-	assert.Equal(t, -4.0, tupleC.y)
-	assert.Equal(t, -6.0, tupleC.z)
-	assert.True(t, tupleC.IsVector())
+	assertTuplesEqual(t, Vector(-2, -4, -6), tupleC)
 }
 
 func TestNegatingTuples(t *testing.T) {
 	tupleA := Vector(1, -2, 3)
 	result := Negate(tupleA)
-
-	assert.Equal(t, -1.0, result.x)
-	assert.Equal(t, 2.0, result.y)
-	assert.Equal(t, -3.0, result.z)
-	assert.True(t, result.IsVector())
+	assertTuplesEqual(t, Vector(-1, 2, -3), result)
 }
 
 func TestMultiplyingTupleByScalar(t *testing.T) {
 	tupleA := new(1, -2, 3, -4)
 	result := Mul(tupleA, 3.5)
 
-	assert.Equal(t, 3.5, result.x)
-	assert.Equal(t, -7.0, result.y)
-	assert.Equal(t, 10.5, result.z)
-	assert.Equal(t, -14.0, result.w)
+	assertTuplesEqual(t, new(3.5, -7, 10.5, -14.0), result)
 }
 
 func TestMultiplyingTupleByFraction(t *testing.T) {
 	tupleA := new(1, -2, 3, -4)
 	result := Mul(tupleA, 0.5)
-
-	assert.Equal(t, 0.5, result.x)
-	assert.Equal(t, -1, result.y)
-	assert.Equal(t, 1.5, result.z)
-	assert.Equal(t, -2.0, result.w)
+	assertTuplesEqual(t, new(0.5, -1, 1.5, -2.0), result)
 }
 
 func TestDividingTupleByScalar(t *testing.T) {
 	tupleA := new(1, -2, 3, -4)
-	result := Div(tupleA, 2)
+	result := Div(tupleA, 2.0)
 
-	assert.Equal(t, 0.5, result.x)
-	assert.Equal(t, -1, result.y)
-	assert.Equal(t, 1.5, result.z)
-	assert.Equal(t, -2.0, result.w)
+	assertTuplesEqual(t, new(0.5, -1, 1.5, -2.0), result)
 }
 
 func TestMagnitudeOfVector(t *testing.T) {
