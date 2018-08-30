@@ -95,3 +95,20 @@ func Normalize(vec Tuple) Tuple {
 		vec.z/mag,
 	)
 }
+
+//Dot returns the dot product of 2 vectors
+func Dot(a Tuple, b Tuple) float64 {
+	return a.x*b.x +
+		a.y*b.y +
+		a.z*b.z +
+		a.w*b.w
+}
+
+//Cross returns the cross product of 2 vectors
+func Cross(a Tuple, b Tuple) Tuple {
+	return Vector(
+		a.y*b.z-a.z*b.y,
+		a.z*b.x-a.x*b.z,
+		a.x*b.y-a.y*b.x,
+	)
+}

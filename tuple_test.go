@@ -139,4 +139,23 @@ func TestNormalize(t *testing.T) {
 	tupleA = Vector(1, 2, 3)
 	result = Normalize(tupleA)
 	assertTuplesEqual(t, Vector(1/math.Sqrt(14), 2/math.Sqrt(14), 3/math.Sqrt(14)), result)
+	assert.Equal(t, 1.0, Magnitude(result))
+}
+
+func TestDotProduct(t *testing.T) {
+	tupleA := Vector(1, 2, 3)
+	tupleB := Vector(2, 3, 4)
+	result := Dot(tupleA, tupleB)
+	assert.Equal(t, 20.0, result)
+}
+
+func TestCrossProduct(t *testing.T) {
+	tupleA := Vector(1, 2, 3)
+	tupleB := Vector(2, 3, 4)
+
+	resultA := Cross(tupleA, tupleB)
+	assert.Equal(t, Vector(-1, 2, -1), resultA)
+
+	resultB := Cross(tupleB, tupleA)
+	assert.Equal(t, Vector(1, -2, 1), resultB)
 }
