@@ -74,10 +74,10 @@ func Mul(a Tuple, scalar float64) Tuple {
 //Div divides a tuple by a factor
 func Div(a Tuple, scalar float64) Tuple {
 	return Tuple{
-		(scalar / a.x),
-		(scalar / a.y),
-		(scalar / a.z),
-		(scalar / a.w),
+		(a.x / scalar),
+		(a.y / scalar),
+		(a.z / scalar),
+		(a.w / scalar),
 	}
 }
 
