@@ -6,10 +6,7 @@ import (
 
 // Tuple represents either a vector or a point
 type Tuple struct {
-	x float64
-	y float64
-	z float64
-	w float64
+	x, y, z, w float64
 }
 
 // GetTuple returns the tuple
