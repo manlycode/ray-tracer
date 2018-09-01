@@ -7,155 +7,110 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func assertTuplesEqual(t *testing.T, a Tuple, b Tuple) {
-	assert.Equal(t, a.x, b.x, "x values are not equal")
-	assert.Equal(t, a.y, b.y, "y values are not equal")
-	assert.Equal(t, a.z, b.z, "z values are not equal")
-	assert.Equal(t, a.w, b.w, "w values are not equal")
+func TestCast(t *testing.T) {
+	pointTup := Tuple{1, 2, 3, 1}
+	assert.Equal(t, Point{Tuple{1, 2, 3, 1}}, Cast(pointTup))
+
+	vecTup := Tuple{1, 2, 3, 0}
+	assert.Equal(t, Vector{Tuple{1, 2, 3, 0}}, Cast(vecTup))
 }
 
-func TestCreateTuple(t *testing.T) {
-	myTuple := new(4.3, -4.2, 3.1, 1.0)
-	assertTuplesEqual(t, Point(4.3, -4.2, 3.1), myTuple)
+func TestNewPoint(t *testing.T) {
+	p := NewPoint(1, 2, 3)
+	assert.Equal(t, Tuple{1, 2, 3, 1}, p.GetTuple())
 }
 
-func TestIsPoint(t *testing.T) {
-	pointTuple := new(4.3, -4.2, 3.1, 1.0)
-	assert.True(t, pointTuple.IsPoint())
-
-	vectorTuple := new(4.3, -4.2, 3.1, 0.0)
-	assert.False(t, vectorTuple.IsPoint())
-}
-
-func TestIsVector(t *testing.T) {
-	pointTuple := new(4.3, -4.2, 3.1, 1.0)
-	assert.False(t, pointTuple.IsVector())
-
-	vectorTuple := new(4.3, -4.2, 3.1, 0.0)
-	assert.True(t, vectorTuple.IsVector())
-}
-
-func TestCreatePoint(t *testing.T) {
-	point := Point(4.3, -4.2, 3.1)
-
-	assert.Equal(t, 4.3, point.x)
-	assert.Equal(t, -4.2, point.y)
-	assert.Equal(t, 3.1, point.z)
-	assert.True(t, point.IsPoint())
-}
-
-func TestCreateVector(t *testing.T) {
-	vector := Vector(4.3, -4.2, 3.1)
-
-	assert.Equal(t, 4.3, vector.x)
-	assert.Equal(t, -4.2, vector.y)
-	assert.Equal(t, 3.1, vector.z)
-	assert.True(t, vector.IsVector())
+func TestNewVector(t *testing.T) {
+	p := NewVector(1, 2, 3)
+	assert.Equal(t, Tuple{1, 2, 3, 0}, p.GetTuple())
 }
 
 func TestAddingTuples(t *testing.T) {
-	tupleA := new(3, -2, 5, 1)
-	tupleB := new(-2, 3, 1, 0)
-	tupleC := Add(tupleA, tupleB)
-
-	assertTuplesEqual(t, Point(1.0, 1.0, 6.0), tupleC)
+	a := NewPoint(3, -2, 5)
+	b := NewVector(-2, 3, 1)
+	assert.Equal(t, NewPoint(1, 1, 6), Add(a, b))
 }
 
 func TestSubtractingPointFromPoint(t *testing.T) {
-	tupleA := Point(3, 2, 1)
-	tupleB := Point(5, 6, 7)
-	tupleC := Sub(tupleA, tupleB)
+	a := NewPoint(3, 2, 1)
+	b := NewPoint(5, 6, 7)
 
-	assertTuplesEqual(t, Vector(-2, -4, -6), tupleC)
+	assert.Equal(t, NewVector(-2, -4, -6), Sub(a, b))
 }
 
-func TestSubtractingPointFromVector(t *testing.T) {
-	tupleA := Point(3, 2, 1)
-	tupleB := Vector(5, 6, 7)
-	tupleC := Sub(tupleA, tupleB)
-	assertTuplesEqual(t, Point(-2, -4, -6), tupleC)
+func TestSubtractingPointFromNewVector(t *testing.T) {
+	a := NewPoint(3, 2, 1)
+	b := NewVector(5, 6, 7)
+	assert.Equal(t, NewPoint(-2, -4, -6), Sub(a, b))
 }
 
-func TestSubtractingVectorFromVector(t *testing.T) {
-	tupleA := Vector(3, 2, 1)
-	tupleB := Vector(5, 6, 7)
-	tupleC := Sub(tupleA, tupleB)
-	assertTuplesEqual(t, Vector(-2, -4, -6), tupleC)
+func TestSubtractingNewVectorFromNewVector(t *testing.T) {
+	a := NewVector(3, 2, 1)
+	b := NewVector(5, 6, 7)
+	assert.Equal(t, NewVector(-2, -4, -6), Sub(a, b))
 }
 
 func TestNegatingTuples(t *testing.T) {
-	tupleA := Vector(1, -2, 3)
-	result := Negate(tupleA)
-	assertTuplesEqual(t, Vector(-1, 2, -3), result)
+	a := NewVector(1, -2, 3)
+	assert.Equal(t, NewVector(-1, 2, -3), Negate(a))
 }
 
 func TestMultiplyingTupleByScalar(t *testing.T) {
-	tupleA := new(1, -2, 3, -4)
-	result := Mul(tupleA, 3.5)
-
-	assertTuplesEqual(t, new(3.5, -7, 10.5, -14.0), result)
+	a := Tuple{1, -2, 3, -4}
+	assert.Equal(t, Tuple{3.5, -7, 10.5, -14.0}, Mul(a, 3.5))
 }
 
 func TestMultiplyingTupleByFraction(t *testing.T) {
-	tupleA := new(1, -2, 3, -4)
-	result := Mul(tupleA, 0.5)
-	assertTuplesEqual(t, new(0.5, -1, 1.5, -2.0), result)
+	a := Tuple{1, -2, 3, -4}
+	assert.Equal(t, Tuple{0.5, -1, 1.5, -2.0}, Mul(a, 0.5))
 }
 
 func TestDividingTupleByScalar(t *testing.T) {
-	tupleA := new(1, -2, 3, -4)
-	result := Div(tupleA, 2.0)
-
-	assertTuplesEqual(t, new(0.5, -1, 1.5, -2.0), result)
+	a := Tuple{1, -2, 3, -4}
+	assert.Equal(t, Tuple{0.5, -1, 1.5, -2.0}, Div(a, 2.0))
 }
 
-func TestMagnitudeOfVector(t *testing.T) {
-	tupleA := Vector(1, 0, 0)
-	result := Magnitude(tupleA)
-	assert.Equal(t, 1.0, result)
+func TestMagnitudeOfNewVector(t *testing.T) {
+	a := NewVector(1, 0, 0)
+	assert.Equal(t, 1.0, a.Magnitude())
 
-	tupleA = Vector(0, 1, 0)
-	result = Magnitude(tupleA)
-	assert.Equal(t, 1.0, result)
+	a = NewVector(0, 1, 0)
+	assert.Equal(t, 1.0, a.Magnitude())
 
-	tupleA = Vector(0, 0, 1)
-	result = Magnitude(tupleA)
-	assert.Equal(t, 1.0, result)
+	a = NewVector(0, 0, 1)
+	assert.Equal(t, 1.0, a.Magnitude())
 
-	tupleA = Vector(1, 2, 3)
-	result = Magnitude(tupleA)
-	assert.Equal(t, math.Sqrt(14), result)
+	a = NewVector(1, 2, 3)
+	assert.Equal(t, math.Sqrt(14), a.Magnitude())
 
-	tupleA = Vector(-1, -2, -3)
-	result = Magnitude(tupleA)
-	assert.Equal(t, math.Sqrt(14), result)
+	a = NewVector(-1, -2, -3)
+	assert.Equal(t, math.Sqrt(14), a.Magnitude())
 }
 
 func TestNormalize(t *testing.T) {
-	tupleA := Vector(4, 0, 0)
-	result := Normalize(tupleA)
-	assertTuplesEqual(t, Vector(1, 0, 0), result)
+	a := NewVector(4, 0, 0)
+	assert.Equal(t, NewVector(1, 0, 0), a.Normalize())
 
-	tupleA = Vector(1, 2, 3)
-	result = Normalize(tupleA)
-	assertTuplesEqual(t, Vector(1/math.Sqrt(14), 2/math.Sqrt(14), 3/math.Sqrt(14)), result)
-	assert.Equal(t, 1.0, Magnitude(result))
+	a = NewVector(1, 2, 3)
+	result := a.Normalize()
+	assert.Equal(t, NewVector(1/math.Sqrt(14), 2/math.Sqrt(14), 3/math.Sqrt(14)), result)
+	assert.Equal(t, 1.0, result.Magnitude())
 }
 
 func TestDotProduct(t *testing.T) {
-	tupleA := Vector(1, 2, 3)
-	tupleB := Vector(2, 3, 4)
-	result := Dot(tupleA, tupleB)
+	a := NewVector(1, 2, 3)
+	b := NewVector(2, 3, 4)
+	result := Dot(a, b)
 	assert.Equal(t, 20.0, result)
 }
 
 func TestCrossProduct(t *testing.T) {
-	tupleA := Vector(1, 2, 3)
-	tupleB := Vector(2, 3, 4)
+	a := NewVector(1, 2, 3)
+	b := NewVector(2, 3, 4)
 
-	resultA := Cross(tupleA, tupleB)
-	assert.Equal(t, Vector(-1, 2, -1), resultA)
+	resultA := Cross(a, b)
+	assert.Equal(t, NewVector(-1, 2, -1), resultA)
 
-	resultB := Cross(tupleB, tupleA)
-	assert.Equal(t, Vector(1, -2, 1), resultB)
+	resultB := Cross(b, a)
+	assert.Equal(t, NewVector(1, -2, 1), resultB)
 }
