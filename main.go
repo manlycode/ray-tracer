@@ -3,36 +3,38 @@ package main
 import (
 	"fmt"
 
+	"github.com/manlycode/ray-tracer/point"
 	"github.com/manlycode/ray-tracer/tuple"
+	"github.com/manlycode/ray-tracer/vector"
 )
 
 //Projectile represents a projectile in cartesian space
 type Projectile struct {
-	Position tuple.Point
-	Velocity tuple.Vector
+	Position point.Point
+	Velocity vector.Vector
 }
 
 // World represents an origin relative to things in it
 type World struct {
-	Gravity tuple.Vector
-	Wind    tuple.Vector
+	Gravity vector.Vector
+	Wind    vector.Vector
 }
 
 func tick(world World, p Projectile) Projectile {
-	newPos := tuple.Add(p.Position, p.Velocity)
-	newVel := tuple.Add(tuple.Add(p.Velocity, world.Gravity), world.Wind)
-	return Projectile{newPos.(tuple.Point), newVel.(tuple.Vector)}
+	newPos := point.Point{tuple.Add(p.Position, p.Velocity)}
+	newVel := vector.Vector{tuple.Add(tuple.Add(p.Velocity, world.Gravity), world.Wind)}
+	return Projectile{newPos, newVel}
 }
 
 func main() {
 	projectile := Projectile{
-		tuple.NewPoint(0, 0, 0),
-		tuple.NewVector(1, 2, 0),
+		point.New(0, 0, 0),
+		vector.New(1, 2, 0),
 	}
 
 	world := World{
-		tuple.NewVector(-0.5, -0.5, 0),
-		tuple.NewVector(0, 0, 0),
+		vector.New(-0.5, -0.5, 0),
+		vector.New(0, 0, 0),
 	}
 
 	fmt.Println("Hello")
