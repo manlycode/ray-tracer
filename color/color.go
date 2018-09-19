@@ -1,7 +1,9 @@
 package color
 
 import (
+	"fmt"
 	"github.com/manlycode/ray-tracer/tuple"
+	"math"
 )
 
 // Color represents a color
@@ -57,4 +59,26 @@ func HadamardProduct(a Color, b Color) Color {
 		result = append(result, val*bVal)
 	}
 	return Color{result}
+}
+
+func toInt(i float64) uint16 {
+	if i > 1.0 {
+		i = 1.0
+	}
+
+	if i < 0.0 {
+		i = 0.0
+	}
+
+	result := uint16(math.Ceil(255.0 * i))
+	return result
+}
+
+// ToPPMString returns a string representing the rgb component values from 0..155 as a string
+func (c Color) ToPPMStrings() []string {
+	return []string{
+		fmt.Sprintf("%d", toInt(c.r())),
+		fmt.Sprintf("%d", toInt(c.g())),
+		fmt.Sprintf("%d", toInt(c.b())),
+	}
 }

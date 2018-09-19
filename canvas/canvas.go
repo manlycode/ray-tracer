@@ -1,6 +1,7 @@
 package canvas
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/manlycode/ray-tracer/color"
 )
@@ -14,11 +15,16 @@ type Canvas struct {
 
 // New returns a new canvas of width and height
 func New(width int, height int) Canvas {
+	return WithColor(width, height, color.Black())
+}
+
+// WithColor returns a canvas where all pixels are the same color
+func WithColor(width int, height int, c color.Color) Canvas {
 	pixels := make([][]color.Color, height)
 	for row := range pixels {
 		pixels[row] = make([]color.Color, width)
 		for col := range pixels[row] {
-			pixels[row][col] = color.Black()
+			pixels[row][col] = c
 		}
 	}
 
@@ -35,8 +41,32 @@ func (c Canvas) WritePixel(x int, y int, col color.Color) {
 	c.Pixels[y][x] = col
 }
 
-// ToPPM
-func (c Canvas) ToPPM() (ppm string) {
-	ppm = fmt.Sprintf("P3\n%d %d\n255\n", c.Width, c.Height)
+// ToPPM returns a PPM representation of the canvas
+func (c Canvas) ToPPM() (buffer bytes.Buffer) {
+	buffer.WriteString(fmt.Sprintf("P3\n%d %d\n255\n", c.Width, c.Height))
+
+	for _, row := range c.Pixels {
+		lineValues := []string{}
+		var lineBuffer bytes.Buffer
+
+		for _, pixel := range row {
+			lineValues = append(lineValues, pixel.ToPPMStrings()...)
+		}
+
+		for i, value := range lineValues {
+			if lineBuffer.Len()+len(value) > 70 {
+				lineBuffer.WriteString("\n")
+			}
+
+			lineBuffer.WriteString(value)
+			if i != len(lineValues)-1 {
+				lineBuffer.WriteString(" ")
+			}
+		}
+
+		buffer.WriteString(lineBuffer.String())
+		buffer.WriteString("\n")
+	}
+
 	return
 }

@@ -45,3 +45,16 @@ func TestBlend(t *testing.T) {
 
 	assert.Equal(t, color.New(0.9, 0.2, 0.04000000000000001), color.HadamardProduct(a, b))
 }
+
+func TestToPPMString(t *testing.T) {
+	a := color.New(1.0, 0, 0)
+	b := color.New(1.5, 0, 0)
+
+	assert.Equal(t, []string{"255", "0", "0"}, a.ToPPMStrings())
+	assert.Equal(t, []string{"255", "0", "0"}, b.ToPPMStrings())
+
+	a = color.New(-0.5, 0, 1)
+	b = color.New(0, 0.5, 0)
+	assert.Equal(t, []string{"0", "0", "255"}, a.ToPPMStrings())
+	assert.Equal(t, []string{"0", "128", "0"}, b.ToPPMStrings())
+}
