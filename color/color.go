@@ -23,6 +23,16 @@ func New(r float64, g float64, b float64) Color {
 	return Color{tuple.Tuple{r, g, b}}
 }
 
+// Black returns the representation of Black
+func Black() Color {
+	return New(0, 0, 0)
+}
+
+// Red returns the representation of Black
+func Red() Color {
+	return New(1.0, 0, 0)
+}
+
 // Add adds colors
 func Add(a Color, b Color) Color {
 	return Color{tuple.Add(a, b)}
