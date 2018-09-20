@@ -54,18 +54,22 @@ func (c Canvas) ToPPM() (buffer bytes.Buffer) {
 		}
 
 		for i, value := range lineValues {
-			if lineBuffer.Len()+len(value) > 70 {
-				lineBuffer.WriteString("\n")
-			}
 
 			lineBuffer.WriteString(value)
-			if i != len(lineValues)-1 {
-				lineBuffer.WriteString(" ")
+			if i+1 == len(lineValues) {
+				lineBuffer.WriteString("\n")
+			} else {
+				if lineBuffer.Len()+1+len(value) > 70 {
+					lineBuffer.WriteString("\n")
+					buffer.WriteString(lineBuffer.String())
+					lineBuffer.Reset()
+				} else {
+					lineBuffer.WriteString(" ")
+				}
 			}
 		}
 
 		buffer.WriteString(lineBuffer.String())
-		buffer.WriteString("\n")
 	}
 
 	return
