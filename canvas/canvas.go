@@ -1,9 +1,11 @@
 package canvas
 
 import (
+	"bufio"
 	"bytes"
 	"fmt"
 	"github.com/manlycode/ray-tracer/color"
+	"os"
 )
 
 // Canvas represents a rectangular grid of pixels
@@ -38,7 +40,14 @@ func (c Canvas) PixelAt(x int, y int) color.Color {
 
 // WritePixel writes a color to a pixel
 func (c Canvas) WritePixel(x int, y int, col color.Color) {
-	c.Pixels[y][x] = col
+	if x >= 0 && y >= 0 && x < c.Width && y < c.Height {
+		c.Pixels[y][x] = col
+	}
+}
+
+// WritePixelFlipped writes a color to a pixel
+func (c Canvas) WritePixelFlipped(x int, y int, col color.Color) {
+	c.WritePixel(x, c.Height-y, col)
 }
 
 // ToPPM returns a PPM representation of the canvas
@@ -73,4 +82,13 @@ func (c Canvas) ToPPM() (buffer bytes.Buffer) {
 	}
 
 	return
+}
+
+// Save writes the canvas PPM out to a file
+func (c Canvas) Save(path string) {
+	f, _ := os.Create(path)
+	w := bufio.NewWriter(f)
+	buf := c.ToPPM()
+	buf.WriteTo(w)
+	w.Flush()
 }

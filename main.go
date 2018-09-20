@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 
+	"github.com/manlycode/ray-tracer/canvas"
+	"github.com/manlycode/ray-tracer/color"
 	"github.com/manlycode/ray-tracer/point"
 	"github.com/manlycode/ray-tracer/tuple"
 	"github.com/manlycode/ray-tracer/vector"
@@ -27,22 +29,26 @@ func tick(world World, p Projectile) Projectile {
 }
 
 func main() {
+	canvas := canvas.New(500, 500)
+
 	projectile := Projectile{
 		point.New(0, 0, 0),
-		vector.New(1, 2, 0),
+		vector.New(5, 20, 0),
 	}
 
 	world := World{
-		vector.New(-0.5, -0.5, 0),
+		vector.New(0, -0.5, 0),
 		vector.New(0, 0, 0),
 	}
 
-	fmt.Println("Hello")
-
 	sum := 1
 	for sum < 200 {
+		posTuple := projectile.Position.GetTuple()
+		fmt.Println(posTuple)
+		canvas.WritePixelFlipped(int(projectile.Position.X()), int(projectile.Position.Y()), color.Red())
+
 		projectile = tick(world, projectile)
-		fmt.Println(projectile.Position.GetTuple())
 		sum++
 	}
+	canvas.Save("projectile.ppm")
 }

@@ -48,6 +48,7 @@ func TestToPPM(t *testing.T) {
 `
 
 	assert.Equal(t, expected, ppmOutput.String())
+	canv.Save("my_file.ppm")
 }
 
 func TestToPPMLineLength(t *testing.T) {
